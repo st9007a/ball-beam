@@ -105,7 +105,7 @@ class BallBeam():
 
 if __name__ == '__main__':
 
-    pid = PID(kp = 0.1, ki = 0.3, kd = 0.05)
+    pid = PID(kp = 0.6, ki = 0.06, kd = 0.004)
     bb = BallBeam(r = 1, theta = 0.0564, a = 1)
 
     while True:
@@ -115,7 +115,7 @@ if __name__ == '__main__':
 
         time.sleep(0.02)
 
-        print(bb.x1, bb.x3 * pi / 180, pid.set_point, pid.output)
+        print(bb.x1, bb.x3 * 180 / pi, pid.set_point, pid.output * 180 / pi)
 
         if abs(bb.output) > 4:
             break
