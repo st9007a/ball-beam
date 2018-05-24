@@ -54,6 +54,10 @@ class PID():
         self.last_err = self.err
 
         self.output = self.kp * self.p + self.ki * self.i + self.kd * self.d
+        if self.output > 20 * pi / 180:
+            self.output = 20 * pi / 180
+        elif self.output < -20 * pi / 180:
+            self.output = -20 * pi / 180
 
 class BallBeam():
 
@@ -79,13 +83,13 @@ class BallBeam():
 
     def feed(self, u):
 
+        self.curr_ts = time.time()
+        delta_time = self.curr_ts - self.prev_ts
+
         x1_dot = self.x2
         x2_dot = self.B * (self.x1 * self.x4 * self.x4 - self.G * sin(self.x3))
         x3_dot = self.x4
         x4_dot = u
-
-        self.curr_ts = time.time()
-        delta_time = self.curr_ts - self.prev_ts
 
         self.x1 += x1_dot * delta_time
         self.x2 += x2_dot * delta_time
@@ -93,7 +97,7 @@ class BallBeam():
         self.x4 += x4_dot * delta_time
 
         self.prev_ts = self.curr_ts
-        self.state = self.x1
+        self.output = self.x1
 
     def yd(self):
         return self.a * cos(pi * (time.time() - self.start_ts) / 5)
@@ -101,14 +105,17 @@ class BallBeam():
 
 if __name__ == '__main__':
 
-    pid = PID(kp = 1.2, ki = 1, kd = 0.001)
+    pid = PID(kp = 0.1, ki = 0.3, kd = 0.05)
     bb = BallBeam(r = 1, theta = 0.0564, a = 1)
 
     while True:
         pid.set_point = bb.yd()
         bb.feed(pid.output)
-        pid.compute(bb.state)
+        pid.compute(bb.output)
 
         time.sleep(0.02)
 
-        print(bb.x1, bb.x2, bb.x3, bb.x4, pid.set_point)
+        print(bb.x1, bb.x3 * pi / 180, pid.set_point, pid.output)
+
+        if abs(bb.output) > 4:
+            break
