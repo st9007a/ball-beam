@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 import time
 from math import sin, cos, pi
 
@@ -61,9 +62,10 @@ class PID():
 
 class BallBeam():
 
-    def __init__(self, r, theta, a):
+    def __init__(self, r, theta, a, b):
 
         self.a = a
+        self.B = b
 
         self.x1 = r
         self.x2 = 0.0
@@ -74,8 +76,7 @@ class BallBeam():
 
     def init(self):
 
-        self.B = 0.6
-        self.G = 9.8
+        self.G = 9.81
 
         self.curr_ts = time.time()
         self.start_ts = self.curr_ts
@@ -105,8 +106,12 @@ class BallBeam():
 
 if __name__ == '__main__':
 
-    pid = PID(kp = 0.6, ki = 0.06, kd = 0.004)
-    bb = BallBeam(r = 1, theta = 0.0564, a = 1)
+    pid = PID(kp = 0.6, ki = 0.07, kd = 0.004)
+    bb = BallBeam(r = 1, theta = 0.0564, a = 1, b = 0.6)
+
+    log = []
+
+    start_ts = time.time()
 
     while True:
         pid.set_point = bb.yd()
@@ -115,7 +120,11 @@ if __name__ == '__main__':
 
         time.sleep(0.02)
 
-        print(bb.x1, bb.x3 * 180 / pi, pid.set_point, pid.output * 180 / pi)
+        print(bb.x1, bb.x3 * 180 / pi, pid.set_point, pid.output * 180 / pi, pid.i)
+        log.append({'t': time.time() - start_ts, 'r': bb.x1, 'theta': bb.x3})
 
         if abs(bb.output) > 4:
             break
+
+    # with open('log.json', 'w') as j:
+    #     json.dump(log, j, indent = 4)
