@@ -75,9 +75,8 @@ class StandardPSO():
         self.init(bench)
 
         for i in range(iters):
-            print('step: %d' % i)
-            self.step(i, bench)
-            print(self.best_vec)
+            self.step(i, bench) 
+            print('step %05d: %s' % (i, self.best_vec))
 
         self.compute(iters, bench)
 
