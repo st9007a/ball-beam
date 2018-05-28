@@ -2,7 +2,7 @@
 import numpy as np
 
 from random import uniform
-from math import inf
+from math import inf, sqrt
 
 class StandardPSO():
 
@@ -73,10 +73,11 @@ class StandardPSO():
     def optimize(self, iters, bench):
 
         self.init(bench)
+        self.total_iter = iters
 
         for i in range(iters):
-            self.step(i, bench) 
-            print('step %05d: %s' % (i, self.best_vec))
+            self.step(i, bench)
+            print('step %07d: %s' % (i, self.best_vec))
 
         self.compute(iters, bench)
 
@@ -88,3 +89,12 @@ class StandardPSO():
             total += score
 
         return total / len(self.particles)
+
+class PSO_CW(StandardPSO):
+
+    def compute_speed(self, speed, idx, iters, r1, r2):
+        w = (self.total_iter - iters) / self.total_iter * (0.9 - 0.4) + 0.4
+        x = 2 / abs(2 - self.c1 - self.c2 - sqrt((self.c1 + self.c2) * (self.c1 + self.c2 - 4)))
+        new_speed = w * speed + self.c1 * r1 * (self.pbest_vec[idx] - self.particles[idx]) + self.c2 * r2 * (self.gbest_vec - self.particles[idx])
+
+        return x * new_speed
