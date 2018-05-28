@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import json
 import time
 from math import sin, cos, pi
@@ -104,6 +105,9 @@ if __name__ == '__main__':
     bb = BallBeam(r = 1, theta = 0.0564, a = 1, b = 0.6, time_units = 0.02)
 
     log = []
+
+    if not os.path.isdir('log'):
+        os.makedirs('log')
 
     while True:
         pid.set_point = bb.yd()
