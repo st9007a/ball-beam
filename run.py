@@ -17,13 +17,13 @@ def expr(r, theta, a, kp, ki, kd):
         bb.feed(pid.output)
         pid.compute(bb.output)
 
-        if abs(bb.output) > 4 or (bb.total_time) > 30:
+        if abs(bb.output) > 4 or (bb.total_time) > 300:
             break
 
     return pid.objective_value / pid.total_time
 
 def objective(vec):
-    return expr(2, 0.1129, 1, vec[0], vec[1], vec[2])
+    return expr(3, 0.1698, 1, vec[0], vec[1], vec[2])
 
 if __name__ == '__main__':
 
