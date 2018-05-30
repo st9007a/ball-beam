@@ -101,8 +101,8 @@ class BallBeam():
 
 if __name__ == '__main__':
 
-    pid = PID(kp = 0.06984462976520961, ki = 0.0, kd = 0.15930768922547242, time_units = 0.02)
-    bb = BallBeam(r = 3, theta = 0.1698, a = 1, b = 0.6, time_units = 0.02)
+    pid = PID(kp = 0.04493496178999861, ki = 0.13718478597047323, kd = 0.6137969905270756, time_units = 0.02)
+    bb = BallBeam(r = 3, theta = 0.1698, a = 2, b = 0.6, time_units = 0.02)
 
     log = []
 
@@ -119,5 +119,5 @@ if __name__ == '__main__':
         if abs(bb.output) > 4:
             break
 
-    with open('visualize/log/log_a1_cond3.json', 'w') as j:
+    with open('visualize/log/log_a2_cond3.json', 'w') as j:
         json.dump(log, j, indent = 4)
