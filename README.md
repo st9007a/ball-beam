@@ -12,11 +12,12 @@
 - Execute: `python3 run_optimize.py [A] [R] [THETA]`
 - Example: `python3 run_optimize.py 1 1 0.0564`
 
-## Evaluate
+## Simulation
 
 1. Record the configuration to `result.csv`
 2. Execute: `python3 evaluate.py`
 3. Result will be `visualize/log/`
+4. Open `visualize/index.html` with browser
 
 ## Show the Curve
 
