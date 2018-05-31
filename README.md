@@ -15,7 +15,7 @@
 ## Simulation
 
 1. Record the configuration to `result.csv`
-2. Execute: `python3 evaluate.py`
+2. Execute: `python3 simulate.py`
 3. Result will be `visualize/log/`
 4. Open `visualize/index.html` with browser
 
