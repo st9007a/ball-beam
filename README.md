@@ -19,3 +19,6 @@
 2. Execute: `python3 evaluate.py`
 3. Result will be `visualize/log/`
 
+## Show the Curve
+
+Execute all cells in `curve.ipynb`
