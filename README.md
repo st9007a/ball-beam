@@ -20,4 +20,5 @@
 
 ## Show the Curve
 
-Execute all cells in `curve.ipynb`
+1. Make sure `result.csv` exist
+2. Execute all cells in `curve.ipynb`
