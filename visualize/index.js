@@ -10,20 +10,25 @@ function draw() {
   draw_canvas(document.getElementById('graph_3_3'), "log/a_3_r_3_theta_0.1698.json")
 }
 
-function draw_canvas(canvas, logfile) {
+function draw_canvas(div, logfile) {
+  let canvas = div.getElementsByClassName('graph')[0]
+  let timer = div.getElementsByClassName('timer')[0]
   if (canvas.getContext) {
     let ctx = canvas.getContext("2d")
     let data = []
     $.getJSON(logfile, (d) => { data = d })
-    let index = 0
+    let index = 0, time = 0.00
     setInterval(() => {
       if (data[index]) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         draw_stick(ctx, data[index]["theta"])
         draw_ball(ctx, data[index]["r"] * 100, data[index]["theta"])
         index = index + 1
+        time = time + 0.02
+        timer.innerHTML = time.toFixed(2)
       } else {
         index = 0
+        time = 0.00
       }
     }, 20)
   }
