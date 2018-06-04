@@ -1,5 +1,16 @@
 # Ball Beam System
 
+## Environment
+
+- Ubuntu 16.04
+- Python 3.5.2
+
+## Install Package
+
+- Install python3
+- Install pip3
+- Execute command: `pip3 install -r requires.txt`
+
 ## Ball Beam Environment Configuration
 
 - a = 1
